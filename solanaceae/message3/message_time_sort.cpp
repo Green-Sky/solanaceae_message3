@@ -1,6 +1,6 @@
 #include "./message_time_sort.hpp"
 
-#include <solanaceae/registry_message_model/components.hpp>
+#include "./components.hpp"
 
 MessageTimeSort::MessageTimeSort(RegistryMessageModel& rmm) : _rmm(rmm) {
 	_rmm.subscribe(this, RegistryMessageModel_Event::message_construct);
