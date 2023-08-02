@@ -115,6 +115,9 @@ bool RegistryMessageModel::sendText(const Contact3 c, std::string_view message, 
 			return true;
 		}
 	}
+
+	std::cerr << "RMM error: event send text unhandled\n";
+
 	return false;
 }
 
@@ -127,5 +130,8 @@ bool RegistryMessageModel::sendFilePath(const Contact3 c, std::string_view file_
 			return true;
 		}
 	}
+
+	std::cerr << "RMM error: event send file path unhandled\n";
+
 	return false;
 }
