@@ -3,6 +3,8 @@
 #include "./file.hpp"
 
 #include <fstream>
+#include <ios>
+#include <limits>
 
 struct FileRFile : public FileI {
 	std::ifstream _file;
@@ -35,12 +37,21 @@ struct FileRFile : public FileI {
 		// TODO: error check
 		_file.seekg(pos);
 
-		// TODO: optimize
+#if 0
 		std::vector<uint8_t> chunk;
 		int read_char;
 		for (size_t i = 0; i < size && (_file_size == 0 || i+pos < _file_size) && (read_char = _file.get()) != std::ifstream::traits_type::eof(); i++) {
 			chunk.push_back(read_char);
 		}
+#else
+		std::vector<uint8_t> chunk(size);
+		const auto nread = _file.read(reinterpret_cast<char*>(chunk.data()), chunk.size()).gcount();
+		if (nread != std::numeric_limits<std::streamsize>::max()) {
+			chunk.resize(nread); // usually a noop
+		} else {
+			chunk.clear();
+		}
+#endif
 
 		_bytes_read += chunk.size();
 
