@@ -8,13 +8,20 @@
 struct FileRWFile : public FileI {
 	std::fstream _file;
 
-	//FileWFile(std::string_view file_path, uint64_t file_size) : _file(static_cast<std::string>(file_path), std::ios::binary) {
-		//_file_size = file_size;
+	// dont truncate by default
+	FileRWFile(std::string_view file_path, uint64_t file_size, bool trunc = false)
+		: _file(
+			static_cast<std::string>(file_path),
+			std::ios::in |
+			std::ios::out |
+			(trunc ? std::ios::trunc | std::ios::binary : std::ios::binary) // hacky but type safe
+	) {
+		_file_size = file_size;
 
-		//if (!_file.is_open()) {
-			//return; // TODO: error
-		//}
-	//}
+		if (!_file.is_open()) {
+			return; // TODO: error
+		}
+	}
 
 	virtual ~FileRWFile(void) {}
 
@@ -28,7 +35,7 @@ struct FileRWFile : public FileI {
 		}
 
 		// TODO: error check
-		_file.seekg(pos);
+		_file.seekg(pos, std::ios::beg);
 
 #if 0
 		std::vector<uint8_t> chunk;
@@ -59,7 +66,7 @@ struct FileRWFile : public FileI {
 		// if out-of-order, seek
 		if (_file.tellp() != int64_t(pos)) {
 			// TODO: error check
-			_file.seekp(pos);
+			_file.seekp(pos, std::ios::beg);
 		}
 
 		_file.write(reinterpret_cast<const char*>(data.data()), data.size());
