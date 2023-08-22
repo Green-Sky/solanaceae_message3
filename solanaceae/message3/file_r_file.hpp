@@ -29,7 +29,7 @@ struct FileRFile : public FileI {
 		return _file.is_open() && _file.good();
 	}
 
-	std::vector<uint8_t> read(uint64_t pos, uint32_t size) override {
+	std::vector<uint8_t> read(uint64_t pos, uint64_t size) override {
 		if (_file_size > 0 && pos >= _file_size) {
 			return {};
 		}

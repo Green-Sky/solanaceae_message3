@@ -14,7 +14,7 @@ struct FileI {
 	virtual bool isGood(void) = 0;
 
 	// TODO: move to owning/nonowning pointers
-	virtual std::vector<uint8_t> read(uint64_t pos, uint32_t size) = 0;
+	virtual std::vector<uint8_t> read(uint64_t pos, uint64_t size) = 0;
 	virtual bool write(uint64_t pos, const std::vector<uint8_t>& data) = 0;
 };
 

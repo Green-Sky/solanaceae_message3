@@ -23,7 +23,7 @@ struct FileWFile : public FileI {
 	}
 
 	// write only
-	std::vector<uint8_t> read(uint64_t, uint32_t) override { return {}; }
+	std::vector<uint8_t> read(uint64_t, uint64_t) override { return {}; }
 
 	bool write(uint64_t pos, const std::vector<uint8_t>& data) override {
 		if (_file_size > 0 && pos >= _file_size) {

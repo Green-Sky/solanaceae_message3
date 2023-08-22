@@ -15,7 +15,7 @@ struct FileRMem : public FileI {
 		return true;
 	}
 
-	std::vector<uint8_t> read(uint64_t pos, uint32_t size) override {
+	std::vector<uint8_t> read(uint64_t pos, uint64_t size) override {
 		if (_file_size > 0 && pos >= _data.size()) {
 			return {};
 		}
