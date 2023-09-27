@@ -30,6 +30,13 @@ namespace Message::Components {
 		uint64_t ts {0};
 	};
 
+	struct TagUnread {};
+
+	struct Read {
+		// TODO: too much?
+		uint64_t ts {0};
+	};
+
 	struct MessageText {
 		std::string text;
 		MessageText(const std::string_view& view) : text(view) {}

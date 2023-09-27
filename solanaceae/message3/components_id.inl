@@ -17,6 +17,8 @@ DEFINE_COMP_ID(Message::Components::ContactTo)
 DEFINE_COMP_ID(Message::Components::Timestamp)
 DEFINE_COMP_ID(Message::Components::TimestampProcessed)
 DEFINE_COMP_ID(Message::Components::TimestampWritten)
+DEFINE_COMP_ID(Message::Components::TagUnread)
+DEFINE_COMP_ID(Message::Components::Read)
 DEFINE_COMP_ID(Message::Components::MessageText)
 DEFINE_COMP_ID(Message::Components::TagMessageIsAction)
 
