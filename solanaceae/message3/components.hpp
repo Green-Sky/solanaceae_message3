@@ -117,6 +117,7 @@ namespace Message::Components {
 		// TODO: rename to start? or set or ...
 		struct ActionAccept {
 			std::string save_to_path;
+			bool path_is_file = false; // if the path is not the folder to place the file into, overwrites the name
 		};
 
 	} // Transfer
