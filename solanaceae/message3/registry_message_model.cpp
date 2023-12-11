@@ -2,7 +2,12 @@
 
 #include <solanaceae/contact/components.hpp>
 
+#include <chrono>
 #include <iostream>
+
+uint64_t Message::getTimeMS(void) {
+	return std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::system_clock::now().time_since_epoch()).count();
+}
 
 Message3Registry* RegistryMessageModel::get(Contact3 c) {
 	if (_cr.valid(c) && !_cr.all_of<Contact::Components::TagBig>(c)) {

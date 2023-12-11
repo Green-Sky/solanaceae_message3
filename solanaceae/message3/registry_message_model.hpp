@@ -15,7 +15,9 @@ enum class Message3 : uint32_t {};
 using Message3Registry = entt::basic_registry<Message3>;
 using Message3Handle = entt::basic_handle<Message3Registry>;
 
-namespace Message::Events {
+namespace Message {
+
+namespace Events {
 
 	struct MessageConstruct {
 		const Message3Handle e;
@@ -32,6 +34,11 @@ namespace Message::Events {
 	};
 
 } // Events
+
+// get unix time in milliseconds
+uint64_t getTimeMS(void);
+
+} // Message
 
 enum class RegistryMessageModel_Event : uint32_t {
 	message_construct,
