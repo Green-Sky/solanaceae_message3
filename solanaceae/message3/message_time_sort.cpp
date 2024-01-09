@@ -11,7 +11,7 @@ void MessageTimeSort::iterate(void) {
 	// TODO: maybe only every x for updated
 	for (auto* reg : _to_sort) {
 		reg->sort<Message::Components::Timestamp>([](const auto& lhs, const auto& rhs) -> bool {
-			return lhs.ts < rhs.ts;
+			return lhs.ts > rhs.ts;
 		}, entt::insertion_sort{});
 	}
 	_to_sort.clear();
