@@ -5,8 +5,11 @@
 //fwd
 struct FileI;
 
-#include <string>
+#include <entt/container/dense_map.hpp>
+
 #include <memory>
+#include <string>
+#include <vector>
 
 namespace Message::Components {
 
@@ -18,15 +21,17 @@ namespace Message::Components {
 		Contact3 c;
 	};
 
+	// best guess as to how this should be displayed in the global order
 	struct Timestamp {
 		uint64_t ts {0};
 	};
 
-	struct TimestampProcessed {
+	struct TimestampWritten {
 		uint64_t ts {0};
 	};
 
-	struct TimestampWritten {
+	// local start TODO: namespace ?
+	struct TimestampProcessed {
 		uint64_t ts {0};
 	};
 
@@ -35,6 +40,29 @@ namespace Message::Components {
 	struct Read {
 		// TODO: too much?
 		uint64_t ts {0};
+	};
+	// local end
+
+	namespace Remote {
+		// TODO: milliseconds sound excessive
+
+		struct TimestampReceived {
+			// Due to a lack of info with most protocols,
+			// this is often the timestamp we heard they already have the message.
+			entt::dense_map<Contact3, uint64_t> ts;
+		};
+
+		struct TimestampRead {
+			// Due to a lack of info with most protocols,
+			// this is often the timestamp we heard they have read it the message.
+			entt::dense_map<Contact3, uint64_t> ts;
+		};
+
+	} // Remote
+
+	struct SyncedBy {
+		// ts is not updated once set
+		entt::dense_map<Contact3, uint64_t> ts;
 	};
 
 	struct MessageText {
