@@ -19,6 +19,9 @@ add_library(solanaceae_message3
 
 	./solanaceae/message3/message_time_sort.hpp
 	./solanaceae/message3/message_time_sort.cpp
+
+	./solanaceae/message3/message_command_dispatcher.hpp
+	./solanaceae/message3/message_command_dispatcher.cpp
 )
 
 target_include_directories(solanaceae_message3 PUBLIC .)
