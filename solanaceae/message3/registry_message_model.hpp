@@ -69,6 +69,9 @@ struct RegistryMessageModelEventI : public MessageModel3I {
 using RegistryMessageModelEventProviderI = EventProviderI<RegistryMessageModelEventI>;
 
 class RegistryMessageModel : public RegistryMessageModelEventProviderI, public MessageModel3I {
+	public:
+		static constexpr const char* version {"1"};
+
 	protected:
 		Contact3Registry& _cr;
 
