@@ -18,6 +18,8 @@ class MessageCommandDispatcher : public RegistryMessageModelEventI {
 	ConfigModelI& _conf;
 
 	public:
+		static constexpr const char* version {"1"};
+
 		enum Perms {
 			BLACKLIST = 1 << 0,
 			WHITELIST = 1 << 1,
