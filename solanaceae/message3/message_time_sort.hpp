@@ -19,5 +19,6 @@ class MessageTimeSort : public RegistryMessageModelEventI {
 	protected: // mm
 		bool onEvent(const Message::Events::MessageConstruct& e) override;
 		bool onEvent(const Message::Events::MessageUpdated& e) override;
+		bool onEvent(const Message::Events::MessageDestory& e) override;
 };
 

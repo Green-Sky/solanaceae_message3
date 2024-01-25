@@ -27,3 +27,7 @@ bool MessageTimeSort::onEvent(const Message::Events::MessageUpdated& e) {
 	return false;
 }
 
+bool MessageTimeSort::onEvent(const Message::Events::MessageDestory& e) {
+	_to_sort.emplace(e.e.registry());
+	return false;
+}
