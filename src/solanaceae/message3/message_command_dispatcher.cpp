@@ -41,14 +41,18 @@ MessageCommandDispatcher::MessageCommandDispatcher(
 MessageCommandDispatcher::~MessageCommandDispatcher(void) {
 }
 
-void MessageCommandDispatcher::iterate(float) {
+float MessageCommandDispatcher::iterate(float) {
 	if (!_message_queue.empty()) {
 		_rmm.sendText(
 			_message_queue.front().to,
 			_message_queue.front().message
 		);
 		_message_queue.pop_front();
+
+		return 0.05f;
 	}
+
+	return 1.f*60.f*60.f; // 1h
 }
 
 static std::string_view get_first_word(std::string_view text, std::string_view::size_type& out_next) {

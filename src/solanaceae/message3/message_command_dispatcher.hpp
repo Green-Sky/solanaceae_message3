@@ -59,7 +59,7 @@ class MessageCommandDispatcher : public RegistryMessageModelEventI {
 		MessageCommandDispatcher(Contact3Registry& cr, RegistryMessageModel& rmm, ConfigModelI& conf);
 		~MessageCommandDispatcher(void);
 
-		void iterate(float time_delta);
+		float iterate(float time_delta);
 
 		// TODO: think more about permissions?
 		//  - user(s)

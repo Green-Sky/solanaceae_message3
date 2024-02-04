@@ -1,34 +1,66 @@
-cmake_minimum_required(VERSION 3.9 FATAL_ERROR)
+cmake_minimum_required(VERSION 3.24 FATAL_ERROR)
 
-project(solanaceae)
+# cmake setup begin
+project(solanaceae_message3)
 
-add_library(solanaceae_message3
-	./solanaceae/message3/file.hpp
-	./solanaceae/message3/file_r_mem.hpp
-	./solanaceae/message3/file_r_file.hpp
-	./solanaceae/message3/file_w_file.hpp
-	./solanaceae/message3/file_rw_file.hpp
+if (CMAKE_SOURCE_DIR STREQUAL CMAKE_CURRENT_SOURCE_DIR)
+	set(SOLANACEAE_MESSAGE3_STANDALONE ON)
+else()
+	set(SOLANACEAE_MESSAGE3_STANDALONE OFF)
+endif()
+message("II SOLANACEAE_MESSAGE3_STANDALONE " ${SOLANACEAE_MESSAGE3_STANDALONE})
 
-	./solanaceae/message3/components.hpp
-	./solanaceae/message3/components_id.inl
+if (SOLANACEAE_MESSAGE3_STANDALONE)
+	set(CMAKE_POSITION_INDEPENDENT_CODE ON)
 
-	./solanaceae/message3/message_model3.hpp
+	# defaulting to debug mode, if not specified
+	if(NOT CMAKE_BUILD_TYPE)
+		set(CMAKE_BUILD_TYPE "Debug")
+	endif()
 
-	./solanaceae/message3/registry_message_model.hpp
-	./solanaceae/message3/registry_message_model.cpp
+	# setup my vim ycm :D
+	set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
-	./solanaceae/message3/message_time_sort.hpp
-	./solanaceae/message3/message_time_sort.cpp
+	# more paths
+	set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/lib")
+	set(CMAKE_LIBRARY_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/bin")
+	set(CMAKE_RUNTIME_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/bin")
+endif()
 
-	./solanaceae/message3/message_command_dispatcher.hpp
-	./solanaceae/message3/message_command_dispatcher.cpp
-)
+# external libs
+add_subdirectory(./external EXCLUDE_FROM_ALL) # before increasing warn levels, sad :(
 
-target_include_directories(solanaceae_message3 PUBLIC .)
-target_compile_features(solanaceae_message3 PUBLIC cxx_std_17)
-target_link_libraries(solanaceae_message3 PUBLIC
-	solanaceae_util
-	solanaceae_contact
-	EnTT::EnTT
-)
+if (SOLANACEAE_MESSAGE3_STANDALONE)
+	set(CMAKE_CXX_EXTENSIONS OFF)
+
+	# bump up warning levels appropriately for clang, gcc & msvc
+	if (${CMAKE_CXX_COMPILER_ID} STREQUAL "GNU" OR ${CMAKE_CXX_COMPILER_ID} STREQUAL "Clang")
+		add_compile_options(
+			-Wall -Wextra # Reasonable and standard
+			-Wpedantic # Warn if non-standard C++ is used
+			-Wunused # Warn on anything being unused
+			#-Wconversion # Warn on type conversions that may lose data
+			#-Wsign-conversion # Warn on sign conversions
+			-Wshadow # Warn if a variable declaration shadows one from a parent context
+		)
+
+		if (NOT WIN32)
+			#link_libraries(-fsanitize=address)
+			#link_libraries(-fsanitize=address,undefined)
+			#link_libraries(-fsanitize-address-use-after-scope)
+			#link_libraries(-fsanitize=undefined)
+		endif()
+	elseif (${CMAKE_CXX_COMPILER_ID} STREQUAL "MSVC")
+		if (CMAKE_CXX_FLAGS MATCHES "/W[0-4]")
+			string(REGEX REPLACE "/W[0-4]" "/W4" CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS}")
+		else()
+			set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} /W4")
+		endif()
+	endif()
+
+endif()
+
+# cmake setup end
+
+add_subdirectory(./src)
 
