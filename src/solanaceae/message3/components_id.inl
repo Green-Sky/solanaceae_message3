@@ -1,3 +1,5 @@
+#pragma once
+
 #include "./components.hpp"
 
 #include <entt/core/type_info.hpp>
@@ -6,8 +8,12 @@
 #define DEFINE_COMP_ID(x) \
 template<> \
 constexpr entt::id_type entt::type_hash<x>::value() noexcept { \
-    using namespace entt::literals; \
-    return #x##_hs; \
+	using namespace entt::literals; \
+	return #x##_hs; \
+} \
+template<> \
+constexpr std::string_view entt::type_name<x>::value() noexcept { \
+	return #x; \
 }
 
 // cross compile(r) stable ids
