@@ -29,6 +29,7 @@ Message3Registry* RegistryMessageModel::get(Contact3 c) {
 	}
 
 	auto& reg_sh = _contact_messages[c] = std::make_unique<Message3Registry>();
+	reg_sh->ctx().emplace<Contact3>(c);
 	return reg_sh.get();
 }
 
