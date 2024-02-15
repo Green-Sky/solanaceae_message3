@@ -67,6 +67,7 @@ namespace Message::Components {
 
 	struct MessageText {
 		std::string text;
+		MessageText(const std::string& view) : text(view) {}
 		MessageText(const std::string_view& view) : text(view) {}
 	};
 
