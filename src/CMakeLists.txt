@@ -13,6 +13,8 @@ add_library(solanaceae_message3
 	./solanaceae/message3/registry_message_model.hpp
 	./solanaceae/message3/registry_message_model.cpp
 
+	./solanaceae/message3/contact_components.hpp
+
 	./solanaceae/message3/message_time_sort.hpp
 	./solanaceae/message3/message_time_sort.cpp
 
