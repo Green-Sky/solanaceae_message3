@@ -71,7 +71,8 @@ void RegistryMessageModel::throwEventUpdate(Message3Registry& reg, Message3 e) {
 	if (!_update_in_progess) {
 		_update_in_progess = true;
 		for (size_t i = 0; i < _update_queue.size(); i++) {
-			std::cout << "RMM debug: event update " << entt::to_integral(e) << "\n";
+			// WAY too spammy
+			//std::cout << "RMM debug: event update " << entt::to_integral(e) << "\n";
 			dispatch(
 				RegistryMessageModel_Event::message_updated,
 				Message::Events::MessageUpdated{
