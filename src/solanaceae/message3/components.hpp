@@ -2,6 +2,8 @@
 
 #include <solanaceae/contact/contact_model3.hpp>
 
+#include "./message.hpp"
+
 //fwd
 struct FileI;
 
@@ -14,11 +16,11 @@ struct FileI;
 namespace Message::Components {
 
 	struct ContactFrom {
-		Contact3 c;
+		Contact3 c{entt::null};
 	};
 
 	struct ContactTo {
-		Contact3 c;
+		Contact3 c{entt::null};
 	};
 
 	// best guess as to how this should be displayed in the global order
@@ -151,6 +153,21 @@ namespace Message::Components {
 		};
 
 	} // Transfer
+
+	// points to the front/newer message
+	// together they define a range that is,
+	// eg the first(end) and last(begin) message being eg. rendered
+	// MFS requires there to be atleast one other fragment after/before,
+	// if not loaded fragment with fitting tsrange(direction) available
+	// uses fragmentAfter/Before()
+	// they can exist standalone (wip)
+	// if they are a pair, the inside is filled first
+	struct ViewCurserBegin {
+		Message3 curser_end{entt::null};
+	};
+	struct ViewCurserEnd {
+		Message3 curser_begin{entt::null};
+	};
 
 } // Message::Components
 

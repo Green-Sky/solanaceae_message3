@@ -2,6 +2,7 @@
 
 #include <solanaceae/util/event_provider.hpp>
 
+#include "./message.hpp"
 #include "./message_model3.hpp"
 
 #include <entt/entity/registry.hpp>
@@ -10,8 +11,6 @@
 
 #include <memory>
 
-// strong typing
-enum class Message3 : uint32_t {};
 using Message3Registry = entt::basic_registry<Message3>;
 using Message3Handle = entt::basic_handle<Message3Registry>;
 

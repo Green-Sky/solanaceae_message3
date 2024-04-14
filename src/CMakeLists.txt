@@ -5,6 +5,7 @@ add_library(solanaceae_message3
 	./solanaceae/message3/file_w_file.hpp
 	./solanaceae/message3/file_rw_file.hpp
 
+	./solanaceae/message3/message.hpp
 	./solanaceae/message3/components.hpp
 	./solanaceae/message3/components_id.inl
 
