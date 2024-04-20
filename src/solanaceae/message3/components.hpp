@@ -45,23 +45,19 @@ namespace Message::Components {
 	};
 	// local end
 
-	namespace Remote {
-		// TODO: milliseconds sound excessive
+	// TODO: milliseconds sound excessive
+	struct ReceivedBy {
+		// Due to a lack of info with some protocols,
+		// this is often the timestamp we heard they already have the message.
+		entt::dense_map<Contact3, uint64_t> ts;
+	};
 
-		struct TimestampReceived {
-			// Due to a lack of info with most protocols,
-			// this is often the timestamp we heard they already have the message.
-			entt::dense_map<Contact3, uint64_t> ts;
-		};
+	struct ReadBy {
+		entt::dense_map<Contact3, uint64_t> ts;
+	};
 
-		struct TimestampRead {
-			// Due to a lack of info with most protocols,
-			// this is often the timestamp we heard they have read it the message.
-			entt::dense_map<Contact3, uint64_t> ts;
-		};
-
-	} // Remote
-
+	// similar to ReceivedBy, but only set when they sent the message
+	// (efficent protocols have 1 contact in here)
 	struct SyncedBy {
 		// ts is not updated once set
 		entt::dense_map<Contact3, uint64_t> ts;
