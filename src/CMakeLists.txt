@@ -1,9 +1,9 @@
 add_library(solanaceae_message3
-	./solanaceae/message3/file.hpp
-	./solanaceae/message3/file_r_mem.hpp
-	./solanaceae/message3/file_r_file.hpp
-	./solanaceae/message3/file_w_file.hpp
-	./solanaceae/message3/file_rw_file.hpp
+	#./solanaceae/message3/file.hpp
+	#./solanaceae/message3/file_r_mem.hpp
+	#./solanaceae/message3/file_r_file.hpp
+	#./solanaceae/message3/file_w_file.hpp
+	#./solanaceae/message3/file_rw_file.hpp
 
 	./solanaceae/message3/message.hpp
 	./solanaceae/message3/components.hpp

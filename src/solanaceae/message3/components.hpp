@@ -5,7 +5,7 @@
 #include "./message.hpp"
 
 //fwd
-struct FileI;
+struct File2I;
 
 #include <entt/container/dense_map.hpp>
 
@@ -93,7 +93,7 @@ namespace Message::Components {
 		};
 
 		// TODO: rename to stream?
-		using File = std::unique_ptr<FileI>;
+		using File = std::unique_ptr<File2I>;
 
 		struct TagReceiving {};
 		struct TagSending {};
