@@ -4,8 +4,7 @@
 
 #include "./message.hpp"
 
-//fwd
-struct File2I;
+#include <solanaceae/object_store/fwd.hpp>
 
 #include <entt/container/dense_map.hpp>
 
@@ -71,6 +70,11 @@ namespace Message::Components {
 	};
 
 	struct TagMessageIsAction {};
+
+	// points to the object providing the file for this message
+	struct MessageFileObject {
+		ObjectHandle o;
+	};
 
 	namespace Transfer {
 

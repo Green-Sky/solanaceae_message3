@@ -30,6 +30,7 @@ DEFINE_COMP_ID(Message::Components::ReadBy)
 DEFINE_COMP_ID(Message::Components::SyncedBy)
 DEFINE_COMP_ID(Message::Components::MessageText)
 DEFINE_COMP_ID(Message::Components::TagMessageIsAction)
+DEFINE_COMP_ID(Message::Components::MessageFileObject)
 
 DEFINE_COMP_ID(Message::Components::Transfer::TagHaveAll)
 DEFINE_COMP_ID(Message::Components::Transfer::BytesSent)

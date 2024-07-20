@@ -20,3 +20,12 @@ if (NOT TARGET solanaceae_util)
 	FetchContent_MakeAvailable(solanaceae_util)
 endif()
 
+if (NOT TARGET solanaceae_object_store)
+	FetchContent_Declare(solanaceae_object_store
+		GIT_REPOSITORY https://github.com/Green-Sky/solanaceae_object_store.git
+		GIT_TAG master
+		EXCLUDE_FROM_ALL
+	)
+	FetchContent_MakeAvailable(solanaceae_object_store)
+endif()
+
