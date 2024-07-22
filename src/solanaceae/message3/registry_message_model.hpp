@@ -108,3 +108,12 @@ class RegistryMessageModel : public RegistryMessageModelEventProviderI, public M
 		bool sendFilePath(const Contact3 c, std::string_view file_name, std::string_view file_path) override;
 };
 
+template<>
+struct std::hash<Message3Handle> {
+	std::size_t operator()(Message3Handle const& m) const noexcept {
+		const std::size_t h1 = reinterpret_cast<std::size_t>(m.registry());
+		const std::size_t h2 = entt::to_integral(m.entity());
+		return (h1 << 3) ^ (h2 * 11400714819323198485llu);
+	}
+};
+
