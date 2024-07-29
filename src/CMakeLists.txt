@@ -28,7 +28,7 @@ target_compile_features(solanaceae_message3 PUBLIC cxx_std_17)
 target_link_libraries(solanaceae_message3 PUBLIC
 	solanaceae_util
 	solanaceae_contact
-	solanaceae_object_store # for fwd.hpp in components
+	solanaceae_object_store # for fwd.hpp
 	EnTT::EnTT
 )
 

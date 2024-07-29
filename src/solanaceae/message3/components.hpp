@@ -76,6 +76,7 @@ namespace Message::Components {
 		ObjectHandle o;
 	};
 
+#if 0
 	namespace Transfer {
 
 		//struct TransferState {
@@ -153,6 +154,7 @@ namespace Message::Components {
 		};
 
 	} // Transfer
+#endif
 
 	// points to the front/newer message
 	// together they define a range that is,

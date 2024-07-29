@@ -45,6 +45,7 @@ enum class RegistryMessageModel_Event : uint32_t {
 	message_updated,
 	message_destroy,
 
+	//???
 	send_text,
 	send_file_path,
 
@@ -64,12 +65,13 @@ struct RegistryMessageModelEventI : public MessageModel3I {
 	// mm3
 	// send text
 	// send file path
+	// send file obj
 };
 using RegistryMessageModelEventProviderI = EventProviderI<RegistryMessageModelEventI>;
 
 class RegistryMessageModel : public RegistryMessageModelEventProviderI, public MessageModel3I {
 	public:
-		static constexpr const char* version {"1"};
+		static constexpr const char* version {"2"};
 
 	protected:
 		Contact3Registry& _cr;
