@@ -14,7 +14,7 @@ struct ConfigModelI;
 
 class MessageCommandDispatcher : public RegistryMessageModelEventI {
 	Contact3Registry& _cr;
-	RegistryMessageModel& _rmm;
+	RegistryMessageModelI& _rmm;
 	ConfigModelI& _conf;
 
 	public:
@@ -56,7 +56,7 @@ class MessageCommandDispatcher : public RegistryMessageModelEventI {
 		uint64_t _program_started_at {0};
 
 	public:
-		MessageCommandDispatcher(Contact3Registry& cr, RegistryMessageModel& rmm, ConfigModelI& conf);
+		MessageCommandDispatcher(Contact3Registry& cr, RegistryMessageModelI& rmm, ConfigModelI& conf);
 		~MessageCommandDispatcher(void);
 
 		float iterate(float time_delta);

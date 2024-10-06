@@ -33,17 +33,9 @@ DEFINE_COMP_ID(Message::Components::TagMessageIsAction)
 DEFINE_COMP_ID(Message::Components::MessageFileObject)
 
 #if 0
-DEFINE_COMP_ID(Message::Components::Transfer::TagHaveAll)
-DEFINE_COMP_ID(Message::Components::Transfer::BytesSent)
-DEFINE_COMP_ID(Message::Components::Transfer::BytesReceived)
-DEFINE_COMP_ID(Message::Components::Transfer::File)
 DEFINE_COMP_ID(Message::Components::Transfer::TagReceiving)
 DEFINE_COMP_ID(Message::Components::Transfer::TagSending)
-DEFINE_COMP_ID(Message::Components::Transfer::TagPaused)
 DEFINE_COMP_ID(Message::Components::Transfer::StateCanceled)
-DEFINE_COMP_ID(Message::Components::Transfer::FileInfo)
-DEFINE_COMP_ID(Message::Components::Transfer::FileInfoLocal)
-DEFINE_COMP_ID(Message::Components::Transfer::ActionAccept)
 #endif
 
 #undef DEFINE_COMP_ID

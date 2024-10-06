@@ -7,9 +7,6 @@
 
 #include <entt/entity/registry.hpp>
 #include <entt/entity/handle.hpp>
-#include <entt/container/dense_map.hpp>
-
-#include <memory>
 
 using Message3Registry = entt::basic_registry<Message3>;
 using Message3Handle = entt::basic_handle<Message3Registry>;
@@ -69,45 +66,28 @@ struct RegistryMessageModelEventI : public MessageModel3I {
 };
 using RegistryMessageModelEventProviderI = EventProviderI<RegistryMessageModelEventI>;
 
-class RegistryMessageModel : public RegistryMessageModelEventProviderI, public MessageModel3I {
+class RegistryMessageModelI : public RegistryMessageModelEventProviderI, public MessageModel3I {
 	public:
-		static constexpr const char* version {"2"};
+		static constexpr const char* version {"3"};
 
-	protected:
-		Contact3Registry& _cr;
-
-		entt::dense_map<Contact3, std::unique_ptr<Message3Registry>> _contact_messages;
-
-		bool _update_in_progess {false};
-		std::vector<Message3Handle> _update_queue {};
-
+	// rmm interface
 	public:
-		RegistryMessageModel(Contact3Registry& cr) : _cr(cr) {}
-		virtual ~RegistryMessageModel(void) {}
-
-		// TODO: iterate?
-
-	public:
-		Message3Registry* get(Contact3 c);
-		Message3Registry* get(Contact3 c) const;
+		virtual Message3Registry* get(Contact3 c) = 0;
+		virtual Message3Registry* get(Contact3 c) const = 0;
 
 	public: // dispatcher
 		// !!! remember to manually throw these externally
-		void throwEventConstruct(Message3Registry& reg, Message3 e);
-		void throwEventUpdate(Message3Registry& reg, Message3 e);
-		void throwEventDestroy(Message3Registry& reg, Message3 e);
+		virtual void throwEventConstruct(Message3Registry& reg, Message3 e) = 0;
+		virtual void throwEventUpdate(Message3Registry& reg, Message3 e) = 0;
+		virtual void throwEventDestroy(Message3Registry& reg, Message3 e) = 0;
 
 		void throwEventConstruct(Message3Handle h) { throwEventConstruct(*h.registry(), h.entity()); }
 		void throwEventUpdate(Message3Handle h) { throwEventUpdate(*h.registry(), h.entity()); }
 		void throwEventDestroy(Message3Handle h) { throwEventDestroy(*h.registry(), h.entity()); }
 
-		void throwEventConstruct(const Contact3 c, Message3 e);
-		void throwEventUpdate(const Contact3 c, Message3 e);
-		void throwEventDestroy(const Contact3 c, Message3 e);
-
-	public: // mm3
-		bool sendText(const Contact3 c, std::string_view message, bool action = false) override;
-		bool sendFilePath(const Contact3 c, std::string_view file_name, std::string_view file_path) override;
+		virtual void throwEventConstruct(const Contact3 c, Message3 e) = 0;
+		virtual void throwEventUpdate(const Contact3 c, Message3 e) = 0;
+		virtual void throwEventDestroy(const Contact3 c, Message3 e) = 0;
 };
 
 template<>

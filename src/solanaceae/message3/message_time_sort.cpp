@@ -2,7 +2,7 @@
 
 #include "./components.hpp"
 
-MessageTimeSort::MessageTimeSort(RegistryMessageModel& rmm) : _rmm(rmm) {
+MessageTimeSort::MessageTimeSort(RegistryMessageModelI& rmm) : _rmm(rmm) {
 	_rmm.subscribe(this, RegistryMessageModel_Event::message_construct);
 	_rmm.subscribe(this, RegistryMessageModel_Event::message_updated);
 	_rmm.subscribe(this, RegistryMessageModel_Event::message_destroy);

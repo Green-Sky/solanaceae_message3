@@ -5,13 +5,13 @@
 #include <entt/container/dense_set.hpp>
 
 class MessageTimeSort : public RegistryMessageModelEventI {
-	RegistryMessageModel& _rmm;
+	RegistryMessageModelI& _rmm;
 
 	// TODO: use contact instead
 	entt::dense_set<Message3Registry*> _to_sort;
 
 	public:
-		MessageTimeSort(RegistryMessageModel& rmm);
+		MessageTimeSort(RegistryMessageModelI& rmm);
 
 		// do the sorting
 		void iterate(void);

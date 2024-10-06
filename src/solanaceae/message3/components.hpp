@@ -87,27 +87,10 @@ namespace Message::Components {
 				//failed,
 			//} state = paused;
 		//};
-		struct TagHaveAll {};
-
-		struct BytesSent {
-			uint64_t total {0u};
-		};
-
-		struct BytesReceived {
-			uint64_t total {0u};
-		};
-
-		// TODO: rename to stream?
-		using File = std::unique_ptr<File2I>;
 
 		struct TagReceiving {};
 		struct TagSending {};
 		// TODO: add both?
-
-		// convert to enum?
-		// TODO: local/remote
-		// TODO: invert?
-		struct TagPaused {};
 
 		struct StateCanceled {
 			enum Reason {
@@ -130,28 +113,6 @@ namespace Message::Components {
 			uint64_t kind {0};
 		};
 #endif
-
-		struct FileInfo {
-			struct FileDirEntry {
-				std::string file_name; // full path relative to base
-				uint64_t file_size {0};
-			};
-			std::vector<FileDirEntry> file_list;
-			uint64_t total_size {0};
-		};
-
-		// describes the files locally
-		// filename might be different to non local FileInfo
-		// order is the same
-		struct FileInfoLocal {
-			std::vector<std::string> file_list;
-		};
-
-		// TODO: rename to start? or set or ...
-		struct ActionAccept {
-			std::string save_to_path;
-			bool path_is_file = false; // if the path is not the folder to place the file into, overwrites the name
-		};
 
 	} // Transfer
 #endif

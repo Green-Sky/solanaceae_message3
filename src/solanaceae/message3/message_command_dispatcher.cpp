@@ -14,7 +14,7 @@
 
 MessageCommandDispatcher::MessageCommandDispatcher(
 	Contact3Registry& cr,
-	RegistryMessageModel& rmm,
+	RegistryMessageModelI& rmm,
 	ConfigModelI& conf
 ) :
 	_cr(cr), _rmm(rmm), _conf(conf), _program_started_at(Message::getTimeMS())
