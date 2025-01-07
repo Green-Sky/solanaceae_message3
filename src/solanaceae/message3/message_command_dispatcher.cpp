@@ -2,6 +2,7 @@
 
 #include <solanaceae/util/config_model.hpp>
 #include <solanaceae/util/utils.hpp>
+#include <solanaceae/util/time.hpp>
 #include <solanaceae/message3/components.hpp>
 #include <solanaceae/contact/components.hpp>
 
@@ -17,7 +18,7 @@ MessageCommandDispatcher::MessageCommandDispatcher(
 	RegistryMessageModelI& rmm,
 	ConfigModelI& conf
 ) :
-	_cr(cr), _rmm(rmm), _conf(conf), _program_started_at(Message::getTimeMS())
+	_cr(cr), _rmm(rmm), _conf(conf), _program_started_at(getTimeMS())
 {
 	// overwrite default admin and moderator to false
 	_conf.set("MessageCommandDispatcher", "admin", false);

@@ -31,10 +31,6 @@ namespace Events {
 
 } // Events
 
-// get unix time in milliseconds
-// TODO: move to util
-uint64_t getTimeMS(void);
-
 } // Message
 
 enum class RegistryMessageModel_Event : uint32_t {
