@@ -1,7 +1,7 @@
 #pragma once
 
+#include <solanaceae/contact/fwd.hpp>
 #include <solanaceae/message3/registry_message_model.hpp>
-#include <solanaceae/contact/contact_model3.hpp>
 
 #include <deque>
 #include <string>
@@ -13,7 +13,7 @@
 struct ConfigModelI;
 
 class MessageCommandDispatcher : public RegistryMessageModelEventI {
-	Contact3Registry& _cr;
+	ContactStore4I& _cs;
 	RegistryMessageModelI& _rmm;
 	ConfigModelI& _conf;
 
@@ -48,7 +48,7 @@ class MessageCommandDispatcher : public RegistryMessageModelEventI {
 		std::unordered_map<std::string, Command> _command_map;
 
 		struct QueuedMessage {
-			Contact3 to;
+			Contact4 to;
 			std::string message;
 		};
 		std::deque<QueuedMessage> _message_queue;
@@ -56,7 +56,7 @@ class MessageCommandDispatcher : public RegistryMessageModelEventI {
 		uint64_t _program_started_at {0};
 
 	public:
-		MessageCommandDispatcher(Contact3Registry& cr, RegistryMessageModelI& rmm, ConfigModelI& conf);
+		MessageCommandDispatcher(ContactStore4I& cs, RegistryMessageModelI& rmm, ConfigModelI& conf);
 		~MessageCommandDispatcher(void);
 
 		float iterate(float time_delta);
@@ -78,7 +78,7 @@ class MessageCommandDispatcher : public RegistryMessageModelEventI {
 		// generates a help
 		bool helpCommand(std::string_view params, Message3Handle m);
 
-		bool hasPermission(const Command& cmd, const Contact3 contact);
+		bool hasPermission(const Command& cmd, const Contact4 contact);
 
 	protected: // mm
 		bool onEvent(const Message::Events::MessageConstruct& e) override;

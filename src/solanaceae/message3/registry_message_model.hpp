@@ -64,12 +64,12 @@ using RegistryMessageModelEventProviderI = EventProviderI<RegistryMessageModelEv
 
 class RegistryMessageModelI : public RegistryMessageModelEventProviderI, public MessageModel3I {
 	public:
-		static constexpr const char* version {"3"};
+		static constexpr const char* version {"4"};
 
 	// rmm interface
 	public:
-		virtual Message3Registry* get(Contact3 c) = 0;
-		virtual Message3Registry* get(Contact3 c) const = 0;
+		virtual Message3Registry* get(Contact4 c) = 0;
+		virtual Message3Registry* get(Contact4 c) const = 0;
 
 	public: // dispatcher
 		// !!! remember to manually throw these externally
@@ -81,9 +81,9 @@ class RegistryMessageModelI : public RegistryMessageModelEventProviderI, public 
 		void throwEventUpdate(Message3Handle h) { throwEventUpdate(*h.registry(), h.entity()); }
 		void throwEventDestroy(Message3Handle h) { throwEventDestroy(*h.registry(), h.entity()); }
 
-		virtual void throwEventConstruct(const Contact3 c, Message3 e) = 0;
-		virtual void throwEventUpdate(const Contact3 c, Message3 e) = 0;
-		virtual void throwEventDestroy(const Contact3 c, Message3 e) = 0;
+		virtual void throwEventConstruct(const Contact4 c, Message3 e) = 0;
+		virtual void throwEventUpdate(const Contact4 c, Message3 e) = 0;
+		virtual void throwEventDestroy(const Contact4 c, Message3 e) = 0;
 };
 
 template<>

@@ -1,19 +1,21 @@
 #include "./registry_message_model_impl.hpp"
 
 #include <solanaceae/contact/components.hpp>
+#include <solanaceae/contact/contact_store_i.hpp>
 
 #include <iostream>
 
-Message3Registry* RegistryMessageModelImpl::get(Contact3 c) {
-	if (_cr.valid(c) && !_cr.all_of<Contact::Components::TagBig>(c)) {
+Message3Registry* RegistryMessageModelImpl::get(Contact4 c) {
+	const auto& reg = _cs.registry();
+	if (reg.valid(c) && !reg.all_of<Contact::Components::TagBig>(c)) {
 		// TODO: loop upwards
-		if (!_cr.all_of<Contact::Components::Parent>(c)) {
+		if (!reg.all_of<Contact::Components::Parent>(c)) {
 			return nullptr;
 		}
-		c = _cr.get<Contact::Components::Parent>(c).parent;
+		c = reg.get<Contact::Components::Parent>(c).parent;
 	}
 
-	if (!_cr.valid(c)) {
+	if (!reg.valid(c)) {
 		// TODO: throw error
 		return nullptr;
 	}
@@ -24,20 +26,21 @@ Message3Registry* RegistryMessageModelImpl::get(Contact3 c) {
 	}
 
 	auto& reg_sh = _contact_messages[c] = std::make_unique<Message3Registry>();
-	reg_sh->ctx().emplace<Contact3>(c);
+	reg_sh->ctx().emplace<Contact4>(c);
 	return reg_sh.get();
 }
 
-Message3Registry* RegistryMessageModelImpl::get(Contact3 c) const {
-	if (_cr.valid(c) && !_cr.all_of<Contact::Components::TagBig>(c)) {
+Message3Registry* RegistryMessageModelImpl::get(Contact4 c) const {
+	const auto& reg = _cs.registry();
+	if (reg.valid(c) && !reg.all_of<Contact::Components::TagBig>(c)) {
 		// TODO: loop upwards
-		if (!_cr.all_of<Contact::Components::Parent>(c)) {
+		if (!reg.all_of<Contact::Components::Parent>(c)) {
 			return nullptr;
 		}
-		c = _cr.get<Contact::Components::Parent>(c).parent;
+		c = reg.get<Contact::Components::Parent>(c).parent;
 	}
 
-	if (!_cr.valid(c)) {
+	if (!reg.valid(c)) {
 		// TODO: throw error
 		return nullptr;
 	}
@@ -90,25 +93,25 @@ void RegistryMessageModelImpl::throwEventDestroy(Message3Registry& reg, Message3
 	);
 }
 
-void RegistryMessageModelImpl::throwEventConstruct(const Contact3 c, Message3 e) {
+void RegistryMessageModelImpl::throwEventConstruct(const Contact4 c, Message3 e) {
 	if (auto* reg_ptr = get(c); reg_ptr) {
 		throwEventConstruct(*reg_ptr, e);
 	}
 }
 
-void RegistryMessageModelImpl::throwEventUpdate(const Contact3 c, Message3 e) {
+void RegistryMessageModelImpl::throwEventUpdate(const Contact4 c, Message3 e) {
 	if (auto* reg_ptr = get(c); reg_ptr) {
 		throwEventUpdate(*reg_ptr, e);
 	}
 }
 
-void RegistryMessageModelImpl::throwEventDestroy(const Contact3 c, Message3 e) {
+void RegistryMessageModelImpl::throwEventDestroy(const Contact4 c, Message3 e) {
 	if (auto* reg_ptr = get(c); reg_ptr) {
 		throwEventDestroy(*reg_ptr, e);
 	}
 }
 
-bool RegistryMessageModelImpl::sendText(const Contact3 c, std::string_view message, bool action) {
+bool RegistryMessageModelImpl::sendText(const Contact4 c, std::string_view message, bool action) {
 	std::cout << "RMM debug: event send text\n";
 
 	// manual, bc its not an "event"
@@ -123,7 +126,7 @@ bool RegistryMessageModelImpl::sendText(const Contact3 c, std::string_view messa
 	return false;
 }
 
-bool RegistryMessageModelImpl::sendFilePath(const Contact3 c, std::string_view file_name, std::string_view file_path) {
+bool RegistryMessageModelImpl::sendFilePath(const Contact4 c, std::string_view file_name, std::string_view file_path) {
 	std::cout << "RMM debug: event send file path\n";
 
 	// manual, bc its not an "event"

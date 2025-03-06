@@ -1,12 +1,16 @@
 #pragma once
 
-#include <solanaceae/contact/contact_model3.hpp>
+#include <solanaceae/contact/fwd.hpp>
 
 #include "./message.hpp"
 
 #include <solanaceae/object_store/fwd.hpp>
 
 #include <entt/container/dense_map.hpp>
+
+#include <entt/entity/entity.hpp>
+#include <entt/entity/registry.hpp>
+#include <entt/entity/handle.hpp>
 
 #include <memory>
 #include <string>
@@ -15,11 +19,11 @@
 namespace Message::Components {
 
 	struct ContactFrom {
-		Contact3 c{entt::null};
+		Contact4 c{entt::null};
 	};
 
 	struct ContactTo {
-		Contact3 c{entt::null};
+		Contact4 c{entt::null};
 	};
 
 	// best guess as to how this should be displayed in the global order
@@ -48,18 +52,18 @@ namespace Message::Components {
 	struct ReceivedBy {
 		// Due to a lack of info with some protocols,
 		// this is often the timestamp we heard they already have the message.
-		entt::dense_map<Contact3, uint64_t> ts;
+		entt::dense_map<Contact4, uint64_t> ts;
 	};
 
 	struct ReadBy {
-		entt::dense_map<Contact3, uint64_t> ts;
+		entt::dense_map<Contact4, uint64_t> ts;
 	};
 
 	// similar to ReceivedBy, but only set when they sent the message
 	// (efficent protocols have 1 contact in here)
 	struct SyncedBy {
 		// ts is not updated once set
-		entt::dense_map<Contact3, uint64_t> ts;
+		entt::dense_map<Contact4, uint64_t> ts;
 	};
 
 	struct MessageText {

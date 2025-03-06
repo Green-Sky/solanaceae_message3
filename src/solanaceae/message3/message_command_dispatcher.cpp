@@ -5,8 +5,8 @@
 #include <solanaceae/util/time.hpp>
 #include <solanaceae/message3/components.hpp>
 #include <solanaceae/contact/components.hpp>
+#include <solanaceae/contact/contact_store_i.hpp>
 
-#include <string_view>
 #include <utility>
 #include <iostream>
 #include <vector>
@@ -14,11 +14,11 @@
 #include <cassert>
 
 MessageCommandDispatcher::MessageCommandDispatcher(
-	Contact3Registry& cr,
+	ContactStore4I& cs,
 	RegistryMessageModelI& rmm,
 	ConfigModelI& conf
 ) :
-	_cr(cr), _rmm(rmm), _conf(conf), _program_started_at(getTimeMS())
+	_cs(cs), _rmm(rmm), _conf(conf), _program_started_at(getTimeMS())
 {
 	// overwrite default admin and moderator to false
 	_conf.set("MessageCommandDispatcher", "admin", false);
@@ -177,13 +177,14 @@ bool MessageCommandDispatcher::helpCommand(std::string_view params, Message3Hand
 	return true;
 }
 
-bool MessageCommandDispatcher::hasPermission(const Command& cmd, const Contact3 contact) {
-	if (!_cr.all_of<Contact::Components::ID>(contact)) {
+bool MessageCommandDispatcher::hasPermission(const Command& cmd, const Contact4 contact) {
+	const auto& reg = _cs.registry();
+	if (!reg.all_of<Contact::Components::ID>(contact)) {
 		std::cerr << "MCD error: contact without ID\n";
 		return false; // default to false
 	}
 
-	const auto id_str = bin2hex(_cr.get<Contact::Components::ID>(contact).data);
+	const auto id_str = bin2hex(reg.get<Contact::Components::ID>(contact).data);
 	std::cout << "MCD: perm check for id '" << id_str << "'\n";
 
 	// TODO: blacklist here
@@ -253,14 +254,16 @@ bool MessageCommandDispatcher::onEvent(const Message::Events::MessageConstruct& 
 		return false;
 	}
 
+	const auto& reg = _cs.registry();
+
 	// skip unrelyable synced
 	if (e.e.all_of<Message::Components::SyncedBy>()) {
 		const auto& list = e.e.get<Message::Components::SyncedBy>().ts;
 		if (
 			std::find_if(
 				list.cbegin(), list.cend(),
-				[this](const auto&& it) {
-					return _cr.any_of<
+				[this, &reg](const auto&& it) {
+					return reg.any_of<
 						Contact::Components::TagSelfStrong,
 						Contact::Components::TagSelfWeak // trust weak self
 					>(it.first);
@@ -273,7 +276,7 @@ bool MessageCommandDispatcher::onEvent(const Message::Events::MessageConstruct& 
 		}
 	}
 
-	const bool is_private = _cr.any_of<Contact::Components::TagSelfWeak, Contact::Components::TagSelfStrong>(e.e.get<Message::Components::ContactTo>().c);
+	const bool is_private = reg.any_of<Contact::Components::TagSelfWeak, Contact::Components::TagSelfStrong>(e.e.get<Message::Components::ContactTo>().c);
 
 	if (is_private) {
 		// check for command prefix
