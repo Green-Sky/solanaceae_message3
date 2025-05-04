@@ -22,9 +22,9 @@ struct MessageModel3I {
 
 	//virtual bool sendFile(const Contact& c, std::string_view file_name, std::unique_ptr<FileI> file) { (void)c,(void)message,(void)action; return false; }
 	virtual bool sendFilePath(const Contact4 c, std::string_view file_name, std::string_view file_path) { (void)c,(void)file_name,(void)file_path; return false; }
-	virtual bool sendFileObj(const Contact4 c, ObjectHandle o) { (void)c,(void)o; return false; } // ideal for forwarding
+	virtual bool sendFileObj(const Contact4 c, ObjectHandle o) { (void)c,(void)o; return false; } // ideal for forwarding, Obj is not copied!
 
-	// we want this back :)
+	// we want this back :) - nope, obj only (not sorry)
 	//virtual bool sendFileMem(const Contact& c, std::string_view file_name, const std::vector<uint8_t>& file) = 0;
 };
 
