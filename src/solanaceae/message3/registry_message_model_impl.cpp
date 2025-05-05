@@ -141,3 +141,18 @@ bool RegistryMessageModelImpl::sendFilePath(const Contact4 c, std::string_view f
 	return false;
 }
 
+bool RegistryMessageModelImpl::sendFileObj(const Contact4 c, ObjectHandle o) {
+	std::cout << "RMM debug: event send file obj\n";
+
+	// manual, bc its not an "event"
+	for (auto* zei : _subscribers.at(size_t(RegistryMessageModel_Event::send_file_obj))) {
+		if (zei->sendFileObj(c, o)) {
+			return true;
+		}
+	}
+
+	std::cerr << "RMM error: event send file obj unhandled\n";
+
+	return false;
+}
+

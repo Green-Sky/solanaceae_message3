@@ -41,6 +41,7 @@ enum class RegistryMessageModel_Event : uint32_t {
 	//???
 	send_text,
 	send_file_path,
+	send_file_obj,
 
 	MAX
 };
@@ -64,7 +65,7 @@ using RegistryMessageModelEventProviderI = EventProviderI<RegistryMessageModelEv
 
 class RegistryMessageModelI : public RegistryMessageModelEventProviderI, public MessageModel3I {
 	public:
-		static constexpr const char* version {"4"};
+		static constexpr const char* version {"5"};
 
 	// rmm interface
 	public:

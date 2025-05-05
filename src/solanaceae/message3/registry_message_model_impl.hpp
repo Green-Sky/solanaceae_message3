@@ -38,5 +38,6 @@ class RegistryMessageModelImpl : public RegistryMessageModelI {
 	public: // mm3
 		bool sendText(const Contact4 c, std::string_view message, bool action = false) override;
 		bool sendFilePath(const Contact4 c, std::string_view file_name, std::string_view file_path) override;
+		bool sendFileObj(const Contact4 c, ObjectHandle o) override;
 };
 
