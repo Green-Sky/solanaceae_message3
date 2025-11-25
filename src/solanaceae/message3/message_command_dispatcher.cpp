@@ -315,7 +315,7 @@ bool MessageCommandDispatcher::onEvent(const Message::Events::MessageConstruct& 
 	std::string_view::size_type pos_next = 0;
 
 	first_word = get_first_word(message_text, pos_next);
-	std::cout << "------- first_word:'" << first_word << "' pos_next:" << pos_next << "\n";
+	//std::cout << "------- first_word:'" << first_word << "' pos_next:" << pos_next << "\n";
 	if (first_word.size() != message_text.size()) {
 		second_word = get_first_word(
 			message_text.substr(pos_next),
@@ -323,7 +323,7 @@ bool MessageCommandDispatcher::onEvent(const Message::Events::MessageConstruct& 
 		);
 	}
 
-	std::cout << "------- second_word:'" << second_word << "' empty:" << second_word.empty() << " pos_next:" << pos_next << "\n";
+	//std::cout << "------- second_word:'" << second_word << "' empty:" << second_word.empty() << " pos_next:" << pos_next << "\n";
 
 	std::string params;
 	if (pos_next != std::string_view::npos && message_text.size() > pos_next+1) {
@@ -339,7 +339,7 @@ bool MessageCommandDispatcher::onEvent(const Message::Events::MessageConstruct& 
 
 		params = tmp_params;
 
-		std::cout << "------- params:'" << params << "'\n";
+		//std::cout << "------- params:'" << params << "'\n";
 	}
 
 	const auto contact_from = e.e.get<Message::Components::ContactFrom>().c;
@@ -356,7 +356,13 @@ bool MessageCommandDispatcher::onEvent(const Message::Events::MessageConstruct& 
 				return false;
 			}
 
-			return command_it->second.fn(params, e.e);
+			try {
+				return command_it->second.fn(params, e.e);
+			} catch (...) {
+				std::cerr << "MCD error: command threw: " << message_text << "\n";
+				// TODO: send message back?
+				return true;
+			}
 		}
 	}
 
@@ -368,7 +374,13 @@ bool MessageCommandDispatcher::onEvent(const Message::Events::MessageConstruct& 
 		}
 
 		params = std::string{second_word} + " " + params;
-		return command_it->second.fn(params, e.e);
+		try {
+			return command_it->second.fn(params, e.e);
+		} catch (...) {
+			std::cerr << "MCD error: command threw: " << message_text << "\n";
+			// TODO: send message back?
+			return true;
+		}
 	}
 
 	return false;
