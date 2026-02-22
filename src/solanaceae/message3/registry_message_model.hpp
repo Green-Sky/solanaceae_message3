@@ -65,7 +65,7 @@ using RegistryMessageModelEventProviderI = EventProviderI<RegistryMessageModelEv
 
 class RegistryMessageModelI : public RegistryMessageModelEventProviderI, public MessageModel3I {
 	public:
-		static constexpr const char* version {"5"};
+		static constexpr const char* version {"6"};
 
 	// rmm interface
 	public:

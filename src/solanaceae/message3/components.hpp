@@ -12,9 +12,7 @@
 #include <entt/entity/registry.hpp>
 #include <entt/entity/handle.hpp>
 
-#include <memory>
 #include <string>
-#include <vector>
 
 namespace Message::Components {
 
