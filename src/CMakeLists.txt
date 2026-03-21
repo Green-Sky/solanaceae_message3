@@ -12,6 +12,8 @@ add_library(solanaceae_message3
 
 	./solanaceae/message3/contact_components.hpp
 	./solanaceae/message3/contact_components_id.inl
+	./solanaceae/message3/contact_components_to_string.hpp
+	./solanaceae/message3/contact_components_to_string.cpp
 
 	./solanaceae/message3/message_time_sort.hpp
 	./solanaceae/message3/message_time_sort.cpp
